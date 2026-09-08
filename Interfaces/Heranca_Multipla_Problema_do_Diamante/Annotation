@@ -1,0 +1,2 @@
+A herança multipla pode gerar problema do diamante:
+ .Uma ambiguidade causada pela existência do mesmo método em mais de uma superclasse.

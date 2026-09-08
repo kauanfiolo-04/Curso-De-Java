@@ -1,0 +1,13 @@
+HashSet --> mais rápido porém nao liga pra ordem
+
+TreeSet --> faz ordenação baseada no compareTo que é implementado pela classe Comparable
+
+LinkedHashSet --> Mantem ordem de inserção dos elementos
+
+Como testa igualdade?
+ - Se hashCode e equals estivereem implementados:
+  .Primeiro hashCode, se der igual ele usa o equals pra confirmar
+  .Lembre-se: String, Integer, Double, etc... já possuem equals e hashCode
+
+ - Se hashCode e equals NAO estiverem implementados:
+  .Compara as referencias(ponteiros) dos objetos

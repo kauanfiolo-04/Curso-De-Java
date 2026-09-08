@@ -1,0 +1,24 @@
+Map<K,V>
+
+É uma coleção de pares chave/valor:
+ . Nao admite repeticoes do objeto chave
+ . Elementos indexados pelo objeto chave (nao possuem posição)
+ . Acesso, inserção e remoção de elemento são rápidos
+
+Implementações:
+ HashMap --> mais rápido e não ordenado
+ TreeMap --> mais lento e ordenado pelo compareTo
+ LinkedHashMap --> velocidade média e elementos na ordem que são adcionados
+
+
+Métodos:
+ .put(key,value);
+ .remove(key);
+ .containsKey(key);
+ .get(key);
+
+ .clear();
+ .size();
+
+ .keySet() --> Set<K>
+ .values() --> Collection<V>

@@ -1,0 +1,112 @@
+package com.cursojava.worker.entities;
+
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+@Entity
+@Table(name = "tb_worker")
+public class Worker {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private WorkerLevel workerLevel;
+    private Double baseSalary;
+
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
+    @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HourContract> contracts = new ArrayList<>();
+
+    public Worker() {}
+
+    public Worker(String name, WorkerLevel workerLevel, Double baseSalary, Department department) {
+        this.name = name;
+        this.workerLevel = workerLevel;
+        this.baseSalary = baseSalary;
+        this.department = department;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public WorkerLevel getWorkerLevel() {
+        return workerLevel;
+    }
+
+    public void setWorkerLevel(WorkerLevel workerLevel) {
+        this.workerLevel = workerLevel;
+    }
+
+    public Double getBaseSalary() {
+        return baseSalary;
+    }
+
+    public void setBaseSalary(Double baseSalary) {
+        this.baseSalary = baseSalary;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public List<HourContract> getContracts() {
+        return contracts;
+    }
+
+    public void addContract(HourContract contract) {
+        contracts.add(contract);
+        contract.setWorker(this);
+    }
+
+    public void removeContract(HourContract contract) {
+        contracts.remove(contract);
+        contract.setWorker(null); // optional, para limpar a memória
+    }
+
+    public double income(int year, int month) {
+        double sum = baseSalary;
+
+        for (HourContract c: contracts) {
+            if (c.getDate().getYear() == year && c.getDate().getMonthValue() == month) {
+                sum += c.totalValue();
+            }
+        }
+
+        return sum;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Worker worker = (Worker) o;
+        return Objects.equals(id, worker.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+}
