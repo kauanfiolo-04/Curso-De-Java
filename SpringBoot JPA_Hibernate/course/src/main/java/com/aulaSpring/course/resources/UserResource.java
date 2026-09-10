@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -44,5 +43,12 @@ public class UserResource {
                 .buildAndExpand(user.getId()).toUri();
 
         return ResponseEntity.created(uri).body(response);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
